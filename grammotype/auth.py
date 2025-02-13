@@ -14,17 +14,21 @@ def logout():
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
+    # print("register method")
     if request.method == 'POST':
+        # print("register POST method")
         email = request.form.get("email")
         firstName = request.form.get("firstName")
         password1 = request.form.get("password1")
         password2 = request.form.get("password2")
-        if len(email) == 0:
-            flash("Email cannot be empty", category="error")
-        elif len(firstName) == 0:
-            flash("Name cannot be empty", category="error")
-        elif len(password1) == 0:
-            flash("Password cannot be empty", category="error")
+        print(request.method)
+        print(request.form)
+        if len(email) < 3:
+            flash("Email must be at least 3 characters", category="error")
+        elif len(firstName) < 2:
+            flash("Name must be at least 2 characters", category="error")
+        elif len(password1) < 2:
+            flash("Password must be at least 2 characters", category="error")
         elif password1 != password2:
             flash("Passwords do not match", category="error")
         else:
