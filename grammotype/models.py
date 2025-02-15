@@ -1,5 +1,6 @@
 from . import db
 from flask_login import UserMixin
+from sqlalchemy import func
 
 class Result(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -13,3 +14,6 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(50))
     first_name = db.Column(db.String(50))
+    results = db.relationship('Result')
+
+# TODO: implement challenge table (many-to-many)
