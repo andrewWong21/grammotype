@@ -21,6 +21,6 @@ def create_app():
     return app
 
 def create_database(app):
-    if not path.exists():
+    if not path.exists('grammotype/' + DB_NAME):
         db.create_all(app=app)
         print('database created')

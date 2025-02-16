@@ -28,6 +28,7 @@ def register():
         elif password1 != password2:
             flash("Passwords do not match", category="error")
         else:
+            # new_user = TODO
             flash("Account successfully created.", category="success")
 
     return render_template("register.html")
