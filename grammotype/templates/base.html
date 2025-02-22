@@ -23,7 +23,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbar">
             <div class="navbar-nav">
-                <a class="nav-item nav-link" id="home" href="/">Home</a>
+                <a class="nav-item nav-link" id="home" href="/">GrammoType</a>
                 {% if user.is_authenticated %}
                 <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
                 {% else %}
@@ -44,8 +44,15 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          {% else %}
+          {% elif category == "success" %}
           <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-bs-dismiss="alert">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% else %}
+          <div class="alert alert-info alert-dismissible fade show" role="alert">
             {{ message }}
             <button type="button" class="close" data-bs-dismiss="alert">
               <span aria-hidden="true">&times;</span>

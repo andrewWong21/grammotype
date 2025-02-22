@@ -1,3 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
-{% block content %}<h1>Homepage content</h1>{% endblock %}
+{% block content %}
+    <h1>Homepage content</h1>
+    <div id="test-header">
+        <div id="info">60</div>
+        <div id="buttons">
+            <button>New Test</button>
+        </div>
+    </div>
+    <div id="test">
+
+    </div>
+    <script src="{{ url_for('static', filename='js/typing.js') }}"></script>
+{% endblock %}
