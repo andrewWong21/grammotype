@@ -1,11 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+:root {
+    --bgColor: #333; 
+    --textPrimary: #fff;
+    --textSecondary: #666;
+    --primaryColor: #fd4;
+}
+
+body {
+    background-color: var(--bgColor) !important;
+    font-family: "Source Code Pro", monospace !important;
+    color: var(--textPrimary) !important;
+    font-size: 1.4rem;
+}
+
 div.word {
     display: inline-block;
-    font-family: 'Roboto Mono', monospace;
-    margin: 0.5px;
+    font-family: "Source Code Pro", monospace !important;
+    margin: 0 5px !important;
 }
 
 div#test {
-    line-height: 40px;
-    height: 120px;
-    overflow: hidden;
+    line-height: 40px !important;
+    height: 120px !important;
+    overflow: hidden !important;
+}
+
+#header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#buttons {
+    text-align: right;
 }
