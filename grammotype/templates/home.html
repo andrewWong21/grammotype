@@ -7,9 +7,10 @@
             <button>New Test</button>
         </div>
     </div>
-    <div id="test">
+    <div id="test" tabindex="0">
         <div id="words"></div>
         <div id="cursor"></div>
+        <div id="focus-error">Click here to focus</div>
     </div>
     <script src="{{ url_for('static', filename='js/typing.js') }}"></script>
 {% endblock %}

@@ -9,13 +9,17 @@ function randomWord(){
 }
 
 function formatWord(word){
-    return `<div class="word">${word} </div>`;
+    return `<div class="word">
+        <span class="letter">
+            ${word.split('').join('</span><span class="letter">')}
+        </span>
+    </div>`;
 }
 
 function newTest(){
     document.getElementById('words').innerHTML = '';
     for (let i = 0; i < 200; i++){
-        document.getElementById('words').innerHTML += randomWord();
+        document.getElementById('words').innerHTML += formatWord(randomWord());
     }
 }
 

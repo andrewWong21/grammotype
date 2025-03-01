@@ -24,7 +24,28 @@ div#test {
     line-height: 40px !important;
     height: 120px !important;
     overflow: hidden !important;
+    position: relative;
 }
+
+#words {
+    filter: blur(5px);
+}
+
+#test:focus #words {
+    filter: blur(0);
+}
+
+#focus-error {
+    position: absolute;
+    inset: 0;
+    text-align: center;
+    padding-top: 40px;
+}
+
+#test:focus #focus-error {
+    display: none;
+}
+
 
 #header {
     display: grid;
