@@ -55,3 +55,27 @@ div#test {
 #buttons {
     text-align: right;
 }
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+#cursor {
+    width: 2px;
+    height: 1.6rem;
+    background: var(--primaryColor);
+    position: fixed;
+    top: 185px;
+    left: 405px;
+    animation: blink .6s infinite;
+}
