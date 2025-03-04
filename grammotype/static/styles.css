@@ -29,6 +29,7 @@ div#test {
 
 #words {
     filter: blur(5px);
+    color: var(--textSecondary);
 }
 
 #test:focus #words {
@@ -78,4 +79,12 @@ div#test {
     top: 185px;
     left: 405px;
     animation: blink .6s infinite;
+}
+
+.letter.correct {
+    color: #fff;
+}
+
+.letter.incorrect {
+    color: #f55;
 }
