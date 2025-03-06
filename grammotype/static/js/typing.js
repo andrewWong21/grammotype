@@ -17,9 +17,7 @@ function randomWord(){
 }
 
 function formatWord(word){
-    return `<div class="word">
-        <span class="letter">${word.split('').join('</span><span class="letter">')}</span>
-    </div>`;
+    return `<div class="word"><span class="letter">${word.split('').join('</span><span class="letter">')}</span></div>`;
 }
 
 function newTest(){
@@ -33,17 +31,47 @@ function newTest(){
 
 document.getElementById('test').addEventListener('keyup', ev => {
     const key = ev.key;
+    const currWord = document.querySelector('.word.current');
     const currLetter = document.querySelector('.letter.current');
-    const expected = currLetter.innerHTML;
+    const expected = currLetter?.innerHTML || ' ';
     const isLetter = key.length === 1 && key !== ' ';
+    const isSpace = key === ' ';
     console.log(key, expected);
     if (isLetter){
         if (currLetter){
             addClass(currLetter, key === expected ? 'correct' : 'incorrect');
             removeClass(currLetter, 'current');
-            addClass(currLetter.nextSibling, 'current');
+            if (currLetter.nextSibling){
+                addClass(currLetter.nextSibling, 'current');
+            }
+        }
+        else{
+            const incorrectLetter = document.createElement('span');
+            incorrectLetter.innerHTML = key;
+            incorrectLetter.className = 'letter incorrect extra';
+            currWord.appendChild(incorrectLetter);
         }
     }
+
+    if (isSpace){
+        // invalidate untyped letters in current word for unexpected space input
+        if (expected !== ' '){
+            const toInvalidate = [...document.querySelectorAll('.word.current .letter:not(.correct)')];
+            toInvalidate.forEach(letter => {
+                addClass(letter, 'incorrect');
+            });
+        }
+        // move to next word after space input
+        removeClass(currWord, 'current');
+        addClass(currWord.nextSibling, 'current');
+        if (currLetter){
+            removeClass(currLetter, 'current');
+        }
+        addClass(currWord.nextSibling.firstChild, 'current');
+    }
+
+    // TODO: move cursor with word
+    
 });
 
 newTest();
