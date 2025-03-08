@@ -9,22 +9,24 @@
 
 body {
     background-color: var(--bgColor) !important;
-    font-family: "Source Code Pro", monospace !important;
     color: var(--textPrimary) !important;
-    font-size: 1.4rem;
 }
 
 div.word {
-    display: inline-block;
+    display: inline-block !important;
     font-family: "Source Code Pro", monospace !important;
     margin: 0 5px !important;
 }
 
 div#test {
-    line-height: 40px !important;
-    height: 120px !important;
+    line-height: 50px;
+    height: 150px;
+    width: 80%;
     overflow: hidden !important;
-    position: relative;
+    position: absolute;
+    top: 300px;
+    left: 150px;
+    font-size: 1.8rem !important;
 }
 
 #words {
@@ -73,11 +75,14 @@ div#test {
 
 #cursor {
     width: 2px;
-    height: 1.6rem;
+    height: 1.8rem;
     background: var(--primaryColor);
     position: fixed;
-    top: 185px;
-    left: 405px;
+    top: 314px;
+    left: 155px; 
+    /*position: absolute;
+    top: 0;
+    left: 0; */
     animation: blink .6s infinite;
 }
 
@@ -87,4 +92,5 @@ div#test {
 
 .letter.incorrect {
     color: #f55;
+    text-decoration: underline;
 }

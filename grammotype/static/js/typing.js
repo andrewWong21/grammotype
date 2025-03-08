@@ -70,7 +70,12 @@ document.getElementById('test').addEventListener('keyup', ev => {
         addClass(currWord.nextSibling.firstChild, 'current');
     }
 
-    // TODO: move cursor with word
+    // move cursor while typing
+    const nextLetter = document.querySelector('.letter.current');
+    const nextWord = document.querySelector('.word.current');
+    const cursor = document.getElementById('cursor');
+    cursor.style.top = (nextLetter || nextWord).getBoundingClientRect().top + (nextLetter ? 6 : 12) + 'px';
+    cursor.style.left = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left' : 'right'] + 'px';
     
 });
 
