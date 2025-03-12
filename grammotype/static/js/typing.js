@@ -36,6 +36,9 @@ document.getElementById('test').addEventListener('keyup', ev => {
     const expected = currLetter?.innerHTML || ' ';
     const isLetter = key.length === 1 && key !== ' ';
     const isSpace = key === ' ';
+    const isBackspace = key === 'Backspace';
+    const isFirstLetter = currLetter === currWord.firstChild;
+
     console.log(key, expected);
     if (isLetter){
         if (currLetter){
@@ -70,11 +73,36 @@ document.getElementById('test').addEventListener('keyup', ev => {
         addClass(currWord.nextSibling.firstChild, 'current');
     }
 
+    if (isBackspace){
+        if (currLetter && isFirstLetter){
+            // move to previous word
+            removeClass(currWord, 'current');
+            addClass(currWord.previousSibling, 'current');
+            removeClass(currLetter, 'current');
+            addClass(currWord.previousSibling.lastChild, 'current');
+            removeClass(currWord.previousSibling.lastChild, 'correct');
+            removeClass(currWord.previousSibling.lastChild, 'incorrect');
+        }
+        else if (currLetter && !isFirstLetter){
+            // move to previous letter in current word
+            removeClass(currLetter, 'current');
+            addClass(currLetter.previousSibling, 'current');
+            removeClass(currLetter.previousSibling, 'correct');
+            removeClass(currLetter.previousSibling, 'incorrect');
+        }
+        else{
+            // current character is space character
+            addClass(currWord.lastChild, 'current');
+            removeClass(currLetter.lastChild, 'correct');
+            removeClass(currLetter.lastChild, 'incorrect');
+        }
+    }
+
     // move cursor while typing
     const nextLetter = document.querySelector('.letter.current');
     const nextWord = document.querySelector('.word.current');
     const cursor = document.getElementById('cursor');
-    cursor.style.top = (nextLetter || nextWord).getBoundingClientRect().top + (nextLetter ? 6 : 12) + 'px';
+    cursor.style.top = (nextLetter || nextWord).getBoundingClientRect().top + (nextLetter ? 5 : 12) + 'px';
     cursor.style.left = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left' : 'right'] + 'px';
     
 });
