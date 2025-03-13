@@ -39,7 +39,8 @@ document.getElementById('test').addEventListener('keyup', ev => {
     const isBackspace = key === 'Backspace';
     const isFirstLetter = currLetter === currWord.firstChild;
 
-    console.log(key, expected);
+    console.log({key, expected});
+
     if (isLetter){
         if (currLetter){
             addClass(currLetter, key === expected ? 'correct' : 'incorrect');
@@ -57,44 +58,82 @@ document.getElementById('test').addEventListener('keyup', ev => {
     }
 
     if (isSpace){
-        // invalidate untyped letters in current word for unexpected space input
-        if (expected !== ' '){
-            const toInvalidate = [...document.querySelectorAll('.word.current .letter:not(.correct)')];
-            toInvalidate.forEach(letter => {
-                addClass(letter, 'incorrect');
-            });
+        // move to next word after expected space input
+        // if there are no incorrect letters
+        if (expected === ' ' && !document.querySelector(".letter.incorrect")){
+            removeClass(currWord, 'current');
+            addClass(currWord.nextSibling, 'current');
+            if (currLetter){
+                removeClass(currLetter, 'current');
+            }
+            addClass(currWord.nextSibling.firstChild, 'current');
         }
-        // move to next word after space input
-        removeClass(currWord, 'current');
-        addClass(currWord.nextSibling, 'current');
-        if (currLetter){
+        // unexpected space, mark letter as incorrect
+        else if (expected !== ' '){
+            addClass(currLetter, 'incorrect');
             removeClass(currLetter, 'current');
+            if (currLetter.nextSibling){
+                addClass(currLetter.nextSibling, 'current');
+            }
         }
-        addClass(currWord.nextSibling.firstChild, 'current');
+        // insert space character instead of moving to next word
+        // if any incorrect characters remain in current word
+        // or space was not expected character
+        else if (document.querySelector(".letter.incorrect")){
+            const incorrectSpace = document.createElement('span');
+            incorrectSpace.innerHTML = '_';
+            incorrectSpace.className = 'letter incorrect extra';
+            currWord.appendChild(incorrectSpace);
+        }
     }
 
     if (isBackspace){
-        if (currLetter && isFirstLetter){
-            // move to previous word
-            removeClass(currWord, 'current');
-            addClass(currWord.previousSibling, 'current');
-            removeClass(currLetter, 'current');
-            addClass(currWord.previousSibling.lastChild, 'current');
-            removeClass(currWord.previousSibling.lastChild, 'correct');
-            removeClass(currWord.previousSibling.lastChild, 'incorrect');
+        const isExtra = document.querySelector(".letter.incorrect.extra:last-of-type");
+        console.log(isExtra, currLetter?.innerHTML, isFirstLetter);
+        if (isExtra){
+            // remove last extra letter
+            currWord.removeChild(isExtra);
+            if (currLetter){
+                if (currLetter.previousSibling){
+                    // move to previous letter in current word
+                    removeClass(currLetter, 'current');
+                    addClass(currLetter.previousSibling, 'current');
+                    removeClass(currLetter.previousSibling, 'incorrect');
+                    removeClass(currLetter.previousSibling, 'correct');
+                }
+                else{
+                    // move to previous word
+                    const prevWord = currWord.previousSibling;
+                    if (prevWord && prevWord.lastChild){
+                        removeClass(currWord, 'current');
+                        addClass(prevWord, 'current');
+                        addClass(prevWord.lastChild, 'current');
+                        removeClass(prevWord.lastChild, 'incorrect');
+                        removeClass(prevWord.lastChild, 'correct');
+                    }
+                }
+            }
+        }
+        else if (currLetter && isFirstLetter){
+            // backspace on first letter moves to space after previous word
+            if (currWord.previousSibling){
+                removeClass(currWord, 'current');
+                addClass(currWord.previousSibling, 'current');
+                removeClass(currLetter, 'current');
+            }
         }
         else if (currLetter && !isFirstLetter){
             // move to previous letter in current word
             removeClass(currLetter, 'current');
             addClass(currLetter.previousSibling, 'current');
-            removeClass(currLetter.previousSibling, 'correct');
             removeClass(currLetter.previousSibling, 'incorrect');
+            removeClass(currLetter.previousSibling, 'correct');
         }
-        else{
+        else if (!currLetter){
             // current character is space character
             addClass(currWord.lastChild, 'current');
-            removeClass(currLetter.lastChild, 'correct');
-            removeClass(currLetter.lastChild, 'incorrect');
+            removeClass(currWord.lastChild, 'incorrect');
+            removeClass(currWord.lastChild, 'correct');
         }
     }
 
