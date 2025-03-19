@@ -49,6 +49,18 @@ div#test {
     display: none;
 }
 
+#test.complete #words {
+    opacity: 0.25;
+    filter: blur(0px);
+}
+
+#test.complete:focus #cursor {
+    display: none;
+}
+
+#test.complete:focus #focus-error {
+    display: none;
+}
 
 #header {
     display: grid;
